@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-
+# path :    /var/lib/rancher/k3s/server/node-token
     config.vm.box = "centos/7"
     
     config.vm.define "server" do |server|
@@ -11,22 +11,30 @@ Vagrant.configure("2") do |config|
             vb.cpus = 1
         end
         server.vm.provision "shell", privileged: true, inline: <<-SHELL
-        curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE=644 sh -
-        # vagrant scp /var/lib/rancher/k3s/server/node-token .
+        curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
+        echo $(sudo cat /var/lib/rancher/k3s/server/node-token) > /vagrant/.token
         SHELL
+        server.trigger.after :up do |trigger|
+            trigger.run = {inline: "vagrant scp server:/vagrant/.token ."}
+        end
     end
 
-    # config.vm.define "worker" do |worker|
-    #     worker.vm.hostname = "abenaniSW"
-    #     worker.vm.network "private_network", ip: "192.168.42.111"
-    #     worker.vm.provider "virtualbox" do |vb|
-    #         vb.name = "abenaniSW"
-    #         vb.memory = 1024
-    #         vb.cpus = 1
-    #     end
-    #     worker.vm.provision "shell", privileged: true, inline: <<-SHELL
-    #     curl -sfL https://get.k3s.io | K3S_TOKEN=????? K3S_URL=https://192.168.42.110:6443 K3S_KUBECONFIG_MODE=644 sh -
-    #     SHELL
-    # end
+    config.vm.define "worker" do |worker|
+        worker.vm.hostname = "abenaniSW"
+        worker.vm.network "private_network", ip: "192.168.42.111"
+        worker.vm.provider "virtualbox" do |vb|
+            vb.name = "abenaniSW"
+            vb.memory = 1024
+            vb.cpus = 1
+        end
+        worker.vm.provision "shell", privileged: true, inline: <<-SHELL
+        echo "*****************************************************"
+        echo "****************************************v*************"
+        cat /vagrant/.token
+        echo "*****************************************************"
+        echo "*****************************************************"
+        curl -sfL https://get.k3s.io | K3S_URL=https://192.168.42.110:6443 K3S_TOKEN=$(cat /vagrant/.token) FLANNEL_OPTIONS=--iface=eth1 sh -
+        SHELL
+    end
     
 end

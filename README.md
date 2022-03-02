@@ -71,9 +71,9 @@ server.trigger.after :up do |trigger|
     trigger.run = {inline: "vagrant scp abenaniS:/vagrant/.token ."}
 end
 ```
-`trigger.run`:  to run a inline or remote script with on the guest Machine
+`trigger.run`:  to run a inline or remote script on the Host Machine
 
-`trigger.run_remote`:   to run a inline or remote script on the host.  
+`trigger.run_remote`:   to run a inline or remote script on the guest Machine.  
 
 
 ### Pass Token to the Host

@@ -24,8 +24,9 @@ end
 To manually set the IP of the bridged interface
 
 ```
-config.vm.network "public_network", ip: "192.168.42.110"
+config.vm.network "private_network", ip: "192.168.42.110"
 ```
+[Private Networks](https://www.vagrantup.com/docs/networking/private_network)
 
 ### Provider Configuration
 
@@ -48,6 +49,7 @@ Vagrant.configure("2") do |config|
   end
 end
 ```
+[Provider Config](https://www.vagrantup.com/docs/providers/configuration)
 
 ### Shell Provisioner
 
@@ -62,6 +64,7 @@ Vagrant.configure("2") do |config|
   SHELL
 end
 ```
+[Shell Provisioner](https://www.vagrantup.com/docs/provisioning/shell)
 
 ### Trigger
 
@@ -74,6 +77,8 @@ end
 `trigger.run`:  to run a inline or remote script with on the guest Machine
 
 `trigger.run_remote`:   to run a inline or remote script on the host.  
+
+[Triggers](https://www.vagrantup.com/docs/triggers/configuration)
 
 
 ### Pass Token to the Host
@@ -107,6 +112,8 @@ curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" INSTALL_K3S_EXEC="--fla
 Agent Configuration
 
 To install on worker node, we run the installation script with the K3S_URL and K3S_TOKEN environment variables.
+
+[K3S Install](https://rancher.com/docs/k3s/latest/en/quick-start/)
 
 ```
  curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" K3S_URL=https://192.168.42.110:6443 K3S_TOKEN=<node-token> INSTALL_K3S_EXEC="--flannel-iface eth1" sh -s -

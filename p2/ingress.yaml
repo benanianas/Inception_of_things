@@ -10,7 +10,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: my-service
+            name: app-one
             port:
               number: 3200
-  ingressClassName: nginx

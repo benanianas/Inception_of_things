@@ -10,6 +10,26 @@ spec:
         pathType: Prefix
         backend:
           service:
+            name: app-three
+            port:
+              number: 3200
+  - host: app1.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
             name: app-one
+            port:
+              number: 3200
+  - host: app2.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-two
             port:
               number: 3200

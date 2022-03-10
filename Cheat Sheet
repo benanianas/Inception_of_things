@@ -1,0 +1,5 @@
+ip addr add 10.12.100.169/16 dev enp0s3
+
+docker exec k3d-abenani-server-0 cat /var/lib/rancher/k3s/server/node-token
+
+curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" K3S_URL=https://http://10.12.100.169:6443 K3S_TOKEN="K100b00e07a872420e0a04c8e2989c713b33ea3280f9b84811a3bb8413417adfed9::server:eKWSsYLEUTxRRPwkHtMf" INSTALL_K3S_EXEC="--flannel-iface eth1" sh -s -

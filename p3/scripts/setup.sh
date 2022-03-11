@@ -1,4 +1,6 @@
-#!/vin/bash
+#! /bin/bash
+
+ip addr add 10.12.12.69/16 dev enp0s3
 
 # install k3d
 echo "installing k3d"
@@ -10,7 +12,9 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 #create k8s cluster
-k3d cluster create -p "80:80@loadbalancer" abenani
+k3d cluster create --api-port 10.12.12.69:6443 -p "80:80@loadbalancer" abenani
+
+k3d kubeconfig get abenani > config
 
 #playground
 kubectl create namespace dev

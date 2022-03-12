@@ -55,5 +55,8 @@ sudo apt install -y ca-certificates curl openssh-server
 curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
 sudo apt update
 sudo apt -y install gitlab-ce
-sed -i -e "s/external_url 'http:\/\/gitlab.example.com'/external_url 'https:\/\/10.12.3.5\/'/g" /etc/gitlab/gitlab.rb
+
+vim /etc/gitlab/gitlab.rb 
+external_url "http://localhost"
+gitlab_rails['initial_root_password'] = "rootp@ass"
 sudo gitlab-ctl reconfigure

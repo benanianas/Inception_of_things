@@ -10,3 +10,4 @@ sudo sshpass -p "anas" scp -o StrictHostKeyChecking=accept-new anas@10.12.12.69:
 mv config .kube
 kubectl create namespace gitlab
 kubectl apply -f /vagrant/confs/gitlab.yaml -n gitlab
+kubectl apply -f /vagrant/confs/ingress.yaml -n gitlab

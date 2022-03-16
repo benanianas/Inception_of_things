@@ -60,3 +60,14 @@ vim /etc/gitlab/gitlab.rb
 external_url "http://localhost"
 gitlab_rails['initial_root_password'] = "rootp@ass"
 sudo gitlab-ctl reconfigure
+
+
+
+
+
+
+
+
+
+
+helm upgrade --install gitlab gitlab/gitlab --timeout 600s  --set global.hosts.externalIP=192.168.42.99  --set certmanager-issuer.email=anas@example.com
